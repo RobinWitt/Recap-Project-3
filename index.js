@@ -13,41 +13,43 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-const maxPage = 1;
+let maxPage = 1;
 let page = 1;
-const searchQuery = "";
+let searchQuery = "";
 
+// landing page
+fetchCharacters(page, searchQuery);
+
+// search filter
 searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
-
-  const searchInput = event.target.elements.query.value;
-  console.log(searchInput);
-
-  //event.target.reset()
+  searchQuery = event.target.elements.query.value;
+  fetchCharacters(page, searchQuery);
+  cardContainer.innerHTML = "";
+  event.target.reset();
 });
 
-fetchCharacters(page);
-
+// change page
 prevButton.addEventListener("click", () => {
   if (page > 1) {
     page--;
-    fetchCharacters(page);
+    fetchCharacters(page, searchQuery);
     cardContainer.innerHTML = "";
   }
 });
 nextButton.addEventListener("click", () => {
-  if (page < 42) {
+  if (page < maxPage) {
     page++;
-    fetchCharacters(page);
+    fetchCharacters(page, searchQuery);
     cardContainer.innerHTML = "";
   }
 });
 
-// fetch characters with variable page
-async function fetchCharacters(pageNumber) {
+// fetch characters with variable url
+async function fetchCharacters(pageNumber, searchQuery) {
   try {
     const response = await fetch(
-      `https://rickandmortyapi.com/api/character/?page=${pageNumber}`
+      `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${searchQuery}`
     );
     if (response.ok) {
       // Success (Good Response)
@@ -62,6 +64,7 @@ async function fetchCharacters(pageNumber) {
           character.episode.length
         );
         pagination.textContent = `${pageNumber} / ${data.info.pages}`;
+        maxPage = data.info.pages;
       });
       return data;
     } else {

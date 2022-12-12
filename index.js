@@ -1,4 +1,7 @@
 import { createCharacterCard } from "./components/card/card.js";
+import { createPagination } from "./components/nav-pagination/nav-pagination.js";
+import { createButton } from "./components/nav-button/nav-button.js";
+import { createSearchBar } from "./components/search-bar/search-bar.js";
 
 export const cardContainer = document.querySelector(
   '[data-js="card-container"]'
@@ -6,8 +9,14 @@ export const cardContainer = document.querySelector(
 export const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
-export const searchBar = document.querySelector('[data-js="search-bar"]');
-const navigation = document.querySelector('[data-js="navigation"]');
+export const navigation = document.querySelector('[data-js="navigation"]');
+
+createSearchBar();
+createButton("prev", "previous");
+createPagination();
+createButton("next", "next");
+
+const searchBar = document.querySelector('[data-js="search-bar"]');
 const prevButton = document.querySelector('[data-js="button-prev"]');
 const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
@@ -21,9 +30,11 @@ let searchQuery = "";
 fetchCharacters(page, searchQuery);
 
 // search filter
+
 searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
   searchQuery = event.target.elements.query.value;
+  page = 1;
   fetchCharacters(page, searchQuery);
   cardContainer.innerHTML = "";
   event.target.reset();

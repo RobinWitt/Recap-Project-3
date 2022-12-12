@@ -1,4 +1,4 @@
-import { searchBarContainer } from "../..";
+import { searchBarContainer } from "../../index.js";
 
 export function createSearchBar() {
   const newSearchBar = document.createElement("form");
@@ -18,6 +18,7 @@ export function createSearchBar() {
   const searchBarButton = document.createElement("button");
   searchBarButton.classList.add("search-bar__button");
   searchBarButton.setAttribute("aria-label", "search for character");
+
   newSearchBar.append(searchBarButton);
 
   const newIcon = document.createElement("img");

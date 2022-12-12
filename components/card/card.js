@@ -1,15 +1,16 @@
+import { cardContainer } from "../../index.js";
+
 export function createCharacterCard(
   cardImageSrc,
   cardTitle,
   cardStatus,
   cardType,
-  cardOccurences,
-  destination
+  cardOccurences
 ) {
   // card
   const card = document.createElement("li");
   card.classList.add("card");
-  destination.append(card);
+  cardContainer.append(card);
   //image container
   const imageContainer = document.createElement("div");
   imageContainer.classList.add("card__image-container");

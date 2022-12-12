@@ -3,10 +3,10 @@ import { createCharacterCard } from "./components/card/card.js";
 export const cardContainer = document.querySelector(
   '[data-js="card-container"]'
 );
-const searchBarContainer = document.querySelector(
+export const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
-const searchBar = document.querySelector('[data-js="search-bar"]');
+export const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
 const prevButton = document.querySelector('[data-js="button-prev"]');
 const nextButton = document.querySelector('[data-js="button-next"]');
@@ -17,8 +17,16 @@ const maxPage = 1;
 let page = 1;
 const searchQuery = "";
 
+searchBar.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const searchInput = event.target.elements.query.value;
+  console.log(searchInput);
+
+  //event.target.reset()
+});
+
 fetchCharacters(page);
-pagination.textContent = `${page} / 42`;
 
 prevButton.addEventListener("click", () => {
   if (page > 1) {
